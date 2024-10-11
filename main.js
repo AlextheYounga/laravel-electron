@@ -7,14 +7,14 @@ const { exec } = require('child_process');
 const { app, BrowserWindow, nativeImage } = require('electron')
 
 const getDesktopConfig = () => {
-	// Electron doesn't have a non-stupid way of reading config values. 
-	if (fs.existsSync(path.join(electronResources, 'build/desktop-config.json'))) {
-		return JSON.parse(fs.readFileSync(path.join(electronResources, 'build/desktop-config.json'), 'utf8'))
-	} else if (fs.existsSync('./desktop-config.json')) {
-		return JSON.parse(fs.readFileSync('./desktop-config.json'))
-	} else {
-		throw new Error('desktop-config.json not found')
-	}
+    // Electron doesn't have a non-stupid way of reading config values. 
+    if (fs.existsSync(path.join(electronResources, 'build/desktop-config.json'))) {
+        return JSON.parse(fs.readFileSync(path.join(electronResources, 'build/desktop-config.json'), 'utf8'))
+    } else if (fs.existsSync('./desktop-config.json')) {
+        return JSON.parse(fs.readFileSync('./desktop-config.json'))
+    } else {
+        throw new Error('desktop-config.json not found')
+    }
 }
 
 const electronResources = process.resourcesPath;
@@ -22,13 +22,13 @@ const desktopConfig = getDesktopConfig()
 const serverUrl = desktopConfig.appUrl
 const autoStartPHP = desktopConfig.autoStartPHP
 
-if (autoStartPHP && serverUrl.includes('localhost') ) {
-	// Set up for local server
-	const php = path.join(electronResources, 'build/php/php');
-	const laravel = path.join(electronResources, 'build/laravel');
-	
-	// Start php server
-	exec(`${php} -S localhost:8124 -t ${laravel}/public`);
+if (autoStartPHP && serverUrl.includes('localhost')) {
+    // Set up for local server
+    const php = path.join(electronResources, 'build/php/php');
+    const laravel = path.join(electronResources, 'build/laravel');
+
+    // Start php server
+    exec(`${php} -S localhost:8124 -t ${laravel}/public`);
 }
 
 const createWindow = () => {
@@ -73,9 +73,10 @@ if (process.platform === 'darwin') {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-	// TODO: Find a way to properly shut down PHP.
-	// https://stackoverflow.com/questions/45481216/how-to-run-a-background-service-in-electron-js
+    // TODO: Find a way to properly shut down PHP.
+    // https://stackoverflow.com/questions/45481216/how-to-run-a-background-service-in-electron-js
     if (process.platform !== 'darwin') app.quit()
+    exec(`killall php`); // Shut down the PHP server
 })
 
 

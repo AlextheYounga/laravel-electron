@@ -27,7 +27,7 @@ determine_arch() {
 # Function to download and unzip PHP
 download_and_unzip() {
 	# Prompt user for input
-	echo "Select a PHP version (Supported versions: 8.1 | 8.2 | 8.3): "
+	echo "Input a PHP version (Supported versions: 8.1 | 8.2 | 8.3): "
     read -r php_version
 
     if [[ "$php_version" != "8.1" && "$php_version" != "8.2" && "$php_version" != "8.3" ]]; then

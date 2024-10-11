@@ -1,4 +1,4 @@
 {
 	"appUrl": "http://localhost:8124",
-	"autoStartPHP": false
+	"autoStartPHP": true
 }
