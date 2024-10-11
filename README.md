@@ -6,7 +6,7 @@
 <img src="https://laravel.com/img/logomark.min.svg" alt="Laravel Logo" width="170"/> 
 </p>
 
-I have never found a perfect way of doing this, but this is the best I've ever come up with. 
+**Wouldn't it be cool if you could add a folder called `desktop` to your Laravel application, and BOOM, it's now a desktop application? Well you can.**
 
 > Specs:\
 > OS: Mac and Linux\
