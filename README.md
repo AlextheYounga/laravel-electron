@@ -6,7 +6,7 @@ I have never found a perfect way of doing this, but this is the best I've ever c
 > Specs:\
 > OS: Mac and Linux\
 > PHP: versions 8.1, 8.2, 8.3\
-> Node: confirmed on Node 18.17*\
+> Node: confirmed on Node 18.17* \
 
 ### Quick Start
 1. Create a new Laravel application
