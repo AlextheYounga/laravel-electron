@@ -107,6 +107,15 @@ What makes this eventually all work is the following inside of `main.js`. We jus
 exec(`${php} -S localhost:8124 -t ${laravel}/public`);
 ```
 
+
+### Development Testing
+Note that the typical `yarn start` electron script will not work as expected unless you change one minor thing:
+- Change the `autoStartPHP` value to `false` in `desktop-config.json`.
+- Then run `php artisan serve --port 8124`
+- Then you can run `yarn start` and it will point to your dev server as expected.
+
+The reason here is that `yarn start` is not going to package your laravel app into Electron's assets, and it will be trying to auto start a PHP binary that doesn't exist within Electron's dev environment, to point to a Laravel application which also doesn't exist. By turning autoStartPHP to false, we are telling Electron not to worry about trying to start your own PHP version, just point to my dev server. 
+
 ### Icons
 I included some icons I made with the `electron-icon-maker` package, included in `package.json`. This took me a very long time to figure out how to configure properly, so I'm keeping these in here to help guide you. I also remember spending at least a day or two just trying to size the images properly. 
 
