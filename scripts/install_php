@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# Function to determine the OS
+determine_os() {
+    unameOut="$(uname -s)"
+    case "${unameOut}" in
+        Linux*)     os="Linux";;
+        Darwin*)    os="Darwin";;
+        *)          os="Unsupported";;
+    esac
+    echo "$os"
+}
+
+# Function to determine the architecture
+determine_arch() {
+    archOut="$(uname -m)"
+    case "${archOut}" in
+        x86_64)     arch="x86_64";;
+        arm64)      arch="arm64";;
+        aarch64)    arch="arm64";;
+        *)          arch="unsupported";;
+    esac
+    echo "$arch"
+}
+
+
+# Function to download and unzip PHP
+download_and_unzip() {
+	# Prompt user for input
+	echo "Select a PHP version (Supported versions: 8.1 | 8.2 | 8.3): "
+    read -r php_version
+
+    if [[ "$php_version" != "8.1" && "$php_version" != "8.2" && "$php_version" != "8.3" ]]; then
+        echo "Invalid PHP version selected. Please select a supported version."
+        prompt_user_for_php_version
+    fi
+
+    output_path="php/php-${php_version}.zip"
+    download_url="${1}/php-${php_version}.zip"
+
+    echo "Downloading from $download_url into $output_path"
+    curl -L -o "$output_path" "$download_url"
+    if [[ $? -eq 0 ]]; then
+        echo "Unzipping php-${php_version}.zip..."
+        unzip -o "$output_path" -d "./php"
+        if [[ $? -eq 0 ]]; then
+            echo "Successfully downloaded php ${php_version}!"
+        else
+            echo "Error unzipping php-${php_version}.zip"
+        fi
+    else
+        echo "Error downloading from $download_url"
+    fi
+}
+
+# Main logic
+if [[ -f "./php/php" ]]; then
+    echo "Detected PHP binary."
+    exit 0
+fi
+
+os=$(determine_os)
+case "$os" in
+    "Linux")
+        echo "Running on Linux"
+        download_path="https://github.com/NativePHP/php-bin/raw/refs/heads/main/bin/linux/x64"
+        download_and_unzip "$download_path"
+        ;;
+    "Darwin")
+        echo "Running on macOS"
+        arch=$(determine_arch)
+        case "$arch" in
+            "x86_64")
+                echo "Running on x86_64 architecture"
+                download_path="https://github.com/NativePHP/php-bin/raw/refs/heads/main/bin/mac/x86"
+                download_and_unzip "$download_path"
+                ;;
+            "arm64")
+                echo "Running on arm64 architecture"
+                download_path="https://github.com/NativePHP/php-bin/raw/refs/heads/main/bin/mac/arm64"
+                download_and_unzip "$download_path"
+                ;;
+            *)
+                echo "Unsupported architecture... Exiting..."
+                exit 1
+                ;;
+        esac
+        ;;
+    *)
+        echo "Unsupported system... Exiting..."
+        exit 1
+        ;;
+esac

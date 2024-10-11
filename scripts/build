@@ -1,0 +1,39 @@
+# bin/bash
+
+# Build the desktop app
+APP_URL=$(grep '"appUrl"' desktop-config.json | awk -F': ' '{ print $2 }' | tr -d '",')
+
+
+# If localhost, run local build scripts
+if [[ $APP_URL == *"localhost"* ]]; then
+	echo "LaravelElectron: Packaging Laravel app and PHP binaries for localhost build.\n"
+	
+	# Run php install
+	./scripts/install_php
+
+	# From project root
+	cd ../
+	rm -rf desktop/laravel # Remove old build
+	mkdir -p desktop/laravel # Make new build folder to place laravel app
+
+	# Ensure our laravel app is built
+	composer install
+	yarn build
+
+	git clone ./ desktop/laravel # Copy the laravel app to the desktop folder
+	cp -r vendor desktop/laravel/vendor # Copy the vendor folder
+	cp -r public/build desktop/laravel/public/build # Copy the build folder
+	cp .env.example desktop/laravel/.env # Take the example env file
+	cd desktop/laravel
+
+	# From desktop/laravel
+	php artisan key:generate
+	php artisan migrate
+	cd ../
+else
+	echo "LaravelElectron: Running plain Electron build for an external app. Not packaging local laravel or PHP binaries."
+	echo "LaravelElectron: Ignore any Electron warnings about php/php and laravel file sources missing. This is expected. \n"
+fi
+
+# From desktop directory
+electron-builder build
