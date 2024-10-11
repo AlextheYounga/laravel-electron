@@ -6,7 +6,7 @@ I have never found a perfect way of doing this, but this is the best I've ever c
 > Specs:\
 > OS: Mac and Linux\
 > PHP: versions 8.1, 8.2, 8.3\
-> Node: confirmed on Node 18.17* \
+> Node: confirmed on Node 18.17
 
 ### Quick Start
 1. Create a new Laravel application
@@ -21,7 +21,10 @@ cd ./example_laravel_11_app
 
 # Clone this repo into your laravel application under "desktop" folder
 git clone https://github.com/AlextheYounga/laravel-electron ./desktop
+```
 
+Move into the desktop folder and install packages
+```shell
 cd ./desktop
 nvm install # Ensure correct version of node
 npm install -g yarn # Ensure yarn is installed
