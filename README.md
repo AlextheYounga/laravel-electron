@@ -3,10 +3,10 @@
 
 I have never found a perfect way of doing this, but this is the best I've ever come up with. 
 
-> Specs:
-> OS: Mac and Linux
-> PHP: versions 8.1, 8.2, 8.3
-> Node: confirmed on Node 18.17*
+> Specs:\
+> OS: Mac and Linux\
+> PHP: versions 8.1, 8.2, 8.3\
+> Node: confirmed on Node 18.17*\
 
 ### Quick Start
 1. Create a new Laravel application
@@ -43,6 +43,7 @@ By default, we set the app url to `localhost` at `8124`, but you can also change
 If you do set this to anything other than `localhost`, my build script is smart enough to skip packaging Laravel and PHP into the Electron app, and just creates a bare-bones Electron wrapper that points to your server URL. 
 
 4. Build
+   
 Run `yarn build`
 
 ```shell
@@ -60,26 +61,26 @@ When running `yarn build`, we tell Electron to take a `git` clone of our outer L
 
 In `package.json` we use the following resources to build our Electron app. 
 ```json
-		"extraResources": [
-			{
-				"from": "./desktop-config.json",
-				"to": "build/desktop-config.json"
-			},
-			{
-				"from": "./php/php",
-				"to": "build/php/php"
-			},
-			{
-				"from": "./laravel",
-				"to": "build/laravel",
-				"filter": [
-					"**/*",
-					".git",
-					"!desktop",
-					"!tests"
-				]
-			}
-		],
+"extraResources": [
+	{
+		"from": "./desktop-config.json",
+		"to": "build/desktop-config.json"
+	},
+	{
+		"from": "./php/php",
+		"to": "build/php/php"
+	},
+	{
+		"from": "./laravel",
+		"to": "build/laravel",
+		"filter": [
+			"**/*",
+			".git",
+			"!desktop",
+			"!tests"
+		]
+	}
+],
 ```
 
 These will eventually be stored under Electron's resources folder, which we can access from our main process using:
