@@ -1,6 +1,11 @@
 # Laravel Electron for Desktop Applications
 ## Automatically Download a PHP binary and Package Electron with PHP and Laravel
 
+<p align="center">
+<img src="https://gblobscdn.gitbook.com/spaces%2F-LBKK1y7h_XWAtuRJG9X%2Favatar.png?alt=media" alt="ElectronJS" width="200"/>
+<img src="https://laravel.com/img/logomark.min.svg" alt="Laravel Logo" width="170"/> 
+</p>
+
 I have never found a perfect way of doing this, but this is the best I've ever come up with. 
 
 > Specs:\
